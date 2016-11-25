@@ -33,9 +33,39 @@
     <script type="text/javascript" src="{{ '/js/vendors/jquery-2.1.4.min.js' | prepend: site.baseurl }}"></script>
     <script type="text/javascript" src="{{ '/js/vendors/md5.js' | prepend: site.baseurl }}"></script>
     {% unless page.show_search == false %}
-    <script type="text/javascript" src="{{ '/js/vendors/jekyll-search.js' | prepend: site.baseurl }}"></script>
+      <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
     {% endunless %}
     <script type="text/javascript" src="{{ '/js/app.js' | prepend: site.baseurl }}"></script>
+
+
+    <script type="text/javascript">
+
+      var client = algoliasearch("{{ site.algolia.application_id }}", "c043efa26b689d9acc1e2dfce733f2bc");
+      var index = client.initIndex('{{ site.algolia.index_name }}');
+
+      //initialize autocomplete on search input (ID selector must match)
+      autocomplete('#aa-search-input',
+      { hint: false, debug: true }, {
+          source: autocomplete.sources.hits(index, {hitsPerPage: 5}),
+          //value to be displayed in input control after user's suggestion selection
+          displayKey: 'name',
+          //hash of templates used when rendering dataset
+          templates: {
+            //'suggestion' templating function used to render a single suggestion
+            suggestion: function(hit) {
+              var str =
+                '<span class="hit-icon icon ' + hit.icon + '"></span> ' +
+                '<span class="hit-title"> ' + hit._highlightResult.title.value + '</span>' +
+                '<br>' +
+                '<span class="icon"></span> <span class="hit-subtitle">' + hit.subtitle + '</span>'
+              ;
+
+              return str;
+            }
+          }
+      });
+    </script>
 
   </body>
 

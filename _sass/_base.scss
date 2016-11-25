@@ -13,7 +13,7 @@
     }
    .site-header {
         text-align: center;
-        img {
+        img#logo {
             margin-top: -20px;
             width: 60% !important;
             height: 60% !important;
@@ -414,7 +414,7 @@ li code {
  */
 
 .site-header {
-    padding: 110px 0 100px 0;
+    padding: 110px 0 60px 0;
     &.has-search-form {
         padding-bottom: 0;
     }
@@ -426,9 +426,6 @@ li code {
         border: 1px solid #ddd;
         padding: 5px 14px !important;
         margin-right: 5px;
-    }
-    img {
-        margin-top: -20px;
     }
     .site-title {
         font-size: 1.6em;
